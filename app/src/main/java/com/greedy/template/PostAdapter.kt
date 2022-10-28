@@ -1,5 +1,6 @@
 package com.greedy.template
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,9 +31,10 @@ class PostHolder(val binding: PostRecyclerBinding) : RecyclerView.ViewHolder(bin
 
     init {
         binding.root.setOnClickListener {
-            //val intent = Intent(it.context, PostDetailActivity::class.java)
-            //intent.putExtra("postId", post.id)
-            //it.context.startActivity(intent)
+            val intent = Intent(it.context, PostDetailActivity::class.java)
+            intent.putExtra("postId", item.contentId)
+            intent.putExtra("facltNm",item.facltNm)
+            it.context.startActivity(intent)
         }
     }
 
