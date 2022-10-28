@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.greedy.template.API.Body
 import com.greedy.template.API.Item
+import com.greedy.template.API.ResponseData
 import com.greedy.template.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PostsAdapter
-    private lateinit var body: Body
+    private lateinit var responseData: ResponseData
     private lateinit var itemList: MutableList<Item?>
     private var isLoading = false
 
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.IO) {
                 val response = PostsService.getPostsService().posts()
                 if (response.isSuccessful) {
-                    body = response.body()!!
-                    itemList =body.items.items.toMutableList()
+                    responseData = response.body()!!
+                    itemList =responseData.response.body.items.item.toMutableList()
                 } else {
                     Log.d("Error", "${response.message()}")
                 }
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == itemList.size - 1) {
                         //bottom of list!
-                        loadMore()
+//                        loadMore()
                         isLoading = true
                     }
                 }
@@ -70,27 +70,27 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun loadMore() {
-
-        CoroutineScope(Dispatchers.Main).launch {
-
-            val skip = if (body.pageNo + 20 < body.totalCount) body.pageNo + 20 else body.totalCount
-
-            withContext(Dispatchers.IO) {
-                val response = PostsService.getPostsService().posts(skip)
-
-                if (response.isSuccessful) {
-                    body = response.body()!!
-                    Log.d("posts", body.toString())
-                    itemList.addAll(body.items.items.toMutableList())
-
-                } else {
-                    Log.d("Error", "${response.message()}")
-                }
-            }
-
-            adapter.notifyDataSetChanged()
-            isLoading = false
-        }
-    }
+//    private fun loadMore() {
+//
+//        CoroutineScope(Dispatchers.Main).launch {
+//
+//            val skip = if (body.pageNo + 20 < body.totalCount) body.pageNo + 20 else body.totalCount
+//
+//            withContext(Dispatchers.IO) {
+//                val response = PostsService.getPostsService().posts(skip)
+//
+//                if (response.isSuccessful) {
+//                    body = response.body()!!
+//                    Log.d("posts", body.toString())
+//                    itemList.addAll(body.items.items.toMutableList())
+//
+//                } else {
+//                    Log.d("Error", "${response.message()}")
+//                }
+//            }
+//
+//            adapter.notifyDataSetChanged()
+//            isLoading = false
+//        }
+//    }
 }
