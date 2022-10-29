@@ -33,7 +33,9 @@
         <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/commentCount" android:padding="10dp"/>
+                android:layout_height="wrap_content" android:id="@+id/commentCount" android:padding="10dp"
+                android:maxLines="5"
+                android:ellipsize="end"/>
 
     </LinearLayout>
 

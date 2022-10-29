@@ -25,8 +25,10 @@ class PostDetailActivity : AppCompatActivity() {
 
         val postId = intent.getStringExtra("postId")
         val facltNm = intent.getStringExtra("facltNm")
+        val intro = intent.getStringExtra("intro")
          binding.title.text = postId
         binding.content.text=facltNm
+        binding.commentCount.text=intro
 
 //          binding.content.text = item.lineIntro
 
